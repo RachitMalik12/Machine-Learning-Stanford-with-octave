@@ -18,5 +18,10 @@ prediction = prediction + theta(j) * x(j)
 end; 
 
 # Vectorized 
-prediction = theta' * x; 
+prediction = theta' * x;
+
+(equivalent to for loop)
+Uses octave's highly optimized methods to multiply matrices so more efficient
+
+  
 

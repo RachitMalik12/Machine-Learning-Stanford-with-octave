@@ -22,11 +22,14 @@ for iter = 1:num_iters
 
 
 
-
     % ============================================================
-
+    cols = 1:m; 
+    t1 = sum(theta(1) + theta(2) * X(cols, 2) - y(cols));
+    t2 = sum((theta(1) + theta(2) * X(cols,2) - y(cols)) .* X(cols,2));
+    theta(1) = theta(1) - (alpha/m) * t1; 
+    theta(2) = theta(2) - (alpha/m) * t2; 
     % Save the cost J in every iteration    
-    J_history(iter) = computeCost(X, y, theta);
+     J_history(iter) = computeCost(X, y, theta);
 
 end
 
