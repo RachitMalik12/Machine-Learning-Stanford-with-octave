@@ -5,6 +5,9 @@ function [J, grad] = costFunction(theta, X, y)
 %   w.r.t. to the parameters.
 
 % Initialize some useful values
+% y = m x 1
+% X = m x 3 
+%theta = 3 x 1 
 m = length(y); % number of training examples
 
 % You need to return the following variables correctly 
@@ -19,6 +22,15 @@ grad = zeros(size(theta));
 %
 % Note: grad should have the same dimensions as theta
 %
+
+sum = 0;
+for i = 1:m
+xi = theta(1) * X(i,1) + theta(2) * X(i,2) + theta(3) * X(i,3)
+sum = sum + (y(i) * log(sigmoid(xi))) + ((1 - y(i)) * log(1 - sigmoid(xi)));
+endfor;
+sprintf("J is: ")
+J = -(1/m) * sum
+
 
 
 
