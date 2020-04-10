@@ -14,12 +14,14 @@ m = length(y); % number of training examples
 J = 0;
 grad = zeros(size(theta));
 
-sum = 0;
-for i = 1:m
-xi = theta(1) * X(i,1) + theta(2) * X(i,2) + theta(3) * X(i,3);
-sum = sum + (y(i) * log(sigmoid(xi))) + ((1 - y(i)) * log(1 - sigmoid(xi)));
-endfor;
-J = -(1/m) * sum;
+J = (1/m) * (-(y' * log(sigmoid(X*theta))) - (1 - y)'*log(1 - sigmoid(X*theta)));
+% Non vectorized version 
+%sum = 0;
+% for i = 1:m
+% xi = theta(1) * X(i,1) + theta(2) * X(i,2) + theta(3) * X(i,3);
+% sum = sum + (y(i) * log(sigmoid(xi))) + ((1 - y(i)) * log(1 - sigmoid(xi)));
+% endfor;
+% J = -(1/m) * sum;
 
 grad = (1/m) * (sigmoid(X*theta) - y )' * X ; 
 
