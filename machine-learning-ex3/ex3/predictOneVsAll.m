@@ -29,7 +29,13 @@ X = [ones(m, 1) X];
 %       are in rows, then, you can use max(A, [], 2) to obtain the max 
 %       for each row.
 %       
-
+m;  % number of rows in X
+% ones is a col vector appended to X 
+size(X);
+size(all_theta);
+predict = sigmoid(X * all_theta'); % X: 5000 x 401, theta': 401 x 10, X* theta' -> 5000 x 10;
+                                   % predict has all the training examples with all 10 features for each row. 
+ [~,p] = max(predict, [], 2);
 
 
 
