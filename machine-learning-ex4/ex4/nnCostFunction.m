@@ -44,7 +44,7 @@ Theta2_grad = zeros(size(Theta2));
 %         computed in ex4.m
 
 
-y_matrix = eye(num_labels)(y,:); % y_matrix = 5000 x 10 
+y_matrix = eye(num_labels)(y,:); % y_matrix =  00 x 10 
 % y_matrix -> for each digit the result 
 a1 = [ones(m,1) X]; % 5000 x 401 
 z2 = a1 * Theta1'; % 5000 x 25 
@@ -54,8 +54,8 @@ z3 = a2 * Theta2'; % 5000 x 10
 a3 = sigmoid(z3); % 5000 x 10 
 
 J = (-1/m) * sum(sum((y_matrix.*log(a3) + (1 - y_matrix).*log(1- a3))));
-t1 = Theta1(:, 2:length(Theta1));
-t2 = Theta2(:, 2:length(Theta2));
+t1 = Theta1(:, 2:size(Theta1,2));
+t2 = Theta2(:, 2:size(Theta2,2));
 J = J + (lambda/ (2 * m)) * ( sum(sum(t1.^2)) + sum(sum(t2.^2)));
    
 
@@ -74,6 +74,21 @@ J = J + (lambda/ (2 * m)) * ( sum(sum(t1.^2)) + sum(sum(t2.^2)));
 %         Hint: We recommend implementing backpropagation using a for-loop
 %               over the training examples if you are implementing it for the 
 %               first time.
+
+% Back prop % 
+
+d3 = a3 - y_matrix;  % 5000 x 10 
+% 5000 x 10 (d3) times 10 x 25 (theta 2) = 5000 x 25
+d2 = (d3 * t2).*sigmoidGradient(z2);
+% 5000 x 25 times 5000 x 401 (a1)
+Delta1 = d2' * a1; % 25 * 401 
+% 10 x 5000 times 5000 x 26 =>
+Delta2 = d3' * a2;  % 10 x 26 
+
+Theta1_grad = (1/m) * Delta1; 
+Theta2_grad = (1/m) * Delta2; 
+
+
 %
 % Part 3: Implement regularization with the cost function and gradients.
 %
