@@ -42,6 +42,8 @@ Theta2_grad = zeros(size(Theta2));
 %         variable J. After implementing Part 1, you can verify that your
 %         cost function computation is correct by verifying the cost
 %         computed in ex4.m
+
+
 y_matrix = eye(num_labels)(y,:); % y_matrix = 5000 x 10 
 % y_matrix -> for each digit the result 
 a1 = [ones(m,1) X]; % 5000 x 401 
