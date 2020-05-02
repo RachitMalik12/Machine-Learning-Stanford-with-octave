@@ -21,7 +21,10 @@ Theta1 = reshape(nn_params(1:hidden_layer_size * (input_layer_size + 1)), ...
 
 Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):end), ...
                  num_labels, (hidden_layer_size + 1));
-
+% size(X)
+% size(y)
+% size(Theta1)
+% size(Theta2)
 % Setup some useful variables
 m = size(X, 1);
          
@@ -33,11 +36,27 @@ Theta2_grad = zeros(size(Theta2));
 % ====================== YOUR CODE HERE ======================
 % Instructions: You should complete the code by working through the
 %               following parts.
+
 %
 % Part 1: Feedforward the neural network and return the cost in the
 %         variable J. After implementing Part 1, you can verify that your
 %         cost function computation is correct by verifying the cost
 %         computed in ex4.m
+y_matrix = eye(num_labels)(y,:); % y_matrix = 5000 x 10 
+% y_matrix -> for each digit the result 
+a1 = [ones(m,1) X]; % 5000 x 401 
+z2 = a1 * Theta1'; % 5000 x 25 
+a2 = sigmoid(z2); % 5000 x 25 
+a2 = [ ones(size(a2), 1) a2]; % 5000 x 26 
+z3 = a2 * Theta2'; % 5000 x 10 
+a3 = sigmoid(z3); % 5000 x 10 
+
+J = (-1/m) * sum(sum((y_matrix.*log(a3) + (1 - y_matrix).*log(1- a3))));
+t1 = Theta1(:, 2:length(Theta1));
+t2 = Theta2(:, 2:length(Theta2));
+J = J + (lambda/ (2 * m)) * ( sum(sum(t1.^2)) + sum(sum(t2.^2)));
+   
+
 %
 % Part 2: Implement the backpropagation algorithm to compute the gradients
 %         Theta1_grad and Theta2_grad. You should return the partial derivatives of
