@@ -19,7 +19,23 @@ grad = zeros(size(theta));
 %               You should set J to the cost and grad to the gradient.
 %
 h_theta = X * theta; 
-J = (1/ (2*m)) * sum( (h_theta - y).^2);
+error_vector = h_theta - y;  % m x 1 
+unRegCost = (1/ (2*m)) * sum(error_vector.^2);
+
+unRegGrad = (1/m) * (X' * (h_theta - y)); 
+
+% don't regularize x0 so set theta(1) to 0 
+thetaZero = theta; 
+thetaZero(1) = 0; 
+RegCostTerm = (lambda/ (2*m)) * sum(thetaZero.^2);
+
+RegGradTerm = (lambda/m) * thetaZero;
+J = unRegCost + RegCostTerm; 
+grad = unRegGrad + RegGradTerm; 
+
+
+
+
 
 
 
@@ -34,6 +50,21 @@ J = (1/ (2*m)) * sum( (h_theta - y).^2);
 
 % =========================================================================
 
-grad = grad(:);
+% grad = grad(:);
 
 end
+%!test
+%! X = [[1 1 1]' magic(3)];
+%! y = [7 6 5]';
+%! theta = [0.1 0.2 0.3 0.4]';
+%! lambda = 0
+%! [J0 g0] = linearRegCostFunction(X, y, theta, lambda);
+%! [J7 g7] = linearRegCostFunction(X, y, theta, 7);
+%! Jexpected_lambda0 = 1.3533;
+%! Gexpected_lambda0 = [-1.4000; -8.7333; -4.3333; -7.9333;];
+%! Jexpected_lambda7 = 1.6917;
+%! Gexpected_lambda7 = [-1.4000; -8.2667; -3.6333; -7.0000;];
+%! assert(J0, Jexpected_lambda0, .0001);
+%! assert(g0, Gexpected_lambda0, .0001);
+%! assert(J7, Jexpected_lambda7, .0001);
+%! assert(g7, Gexpected_lambda7, .0001);
