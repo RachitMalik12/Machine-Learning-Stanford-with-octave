@@ -21,5 +21,13 @@ X_poly = zeros(numel(X), p);
 
 
 % =========================================================================
+m = size(X,1); 
+for j = 1: m
+  poly_col = zeros(p,1); 
+  for i = 1:p 
+    poly_col(i) = X(j).^i; 
+   endfor
+   X_poly(j, :) = poly_col; 
+endfor
 
 end
